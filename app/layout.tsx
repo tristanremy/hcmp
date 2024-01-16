@@ -1,13 +1,10 @@
 import type { Metadata } from 'next'
-import { Inter as FontSans } from 'next/font/google'
-import { cn } from '@/lib/utils'
 
+import { Inter } from 'next/font/google'
 import './globals.css'
 
-export const fontSans = FontSans({
-  subsets: ['latin'],
-  variable: '--font-sans',
-})
+const inter = Inter({ subsets: ['latin'] })
+import { cn } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: 'Hacker Cabin Members Projects',
@@ -21,14 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={cn(
-          'min-h-screen bg-background font-sans antialiased',
-          fontSans.variable,
-        )}
-      >
-        {children}
-      </body>
+      <body className={cn('min-h-screen', inter.className)}>{children}</body>
     </html>
   )
 }

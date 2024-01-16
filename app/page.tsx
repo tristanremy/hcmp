@@ -35,7 +35,9 @@ export default async function Home() {
             <Card key={i}>
               <CardHeader>
                 <CardTitle>{project['Project Name']}</CardTitle>
-                <CardDescription><a href={project['Project URL']}>{project['Project URL']}</a></CardDescription>
+                <CardDescription>
+                  <a href={project['Project URL']}>{project['Project URL']}</a>
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <p>Technology: {project.Technology}</p>
@@ -43,7 +45,10 @@ export default async function Home() {
                 <p>Revenue: {project.Revenue}</p>
               </CardContent>
               <CardFooter>
-                <p>By {project['Maker Name(s)']} - Launched on {project['Date launched']}</p>
+                <p>
+                  By {project['Maker Name(s)']} - Launched on{' '}
+                  {project['Date launched']}
+                </p>
               </CardFooter>
             </Card>
           ))
