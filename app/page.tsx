@@ -17,7 +17,7 @@ export default async function Home() {
   })
 
   const doc = new GoogleSpreadsheet(
-    process.env.GOOGLE_SHEET_ID,
+    process.env.GOOGLE_SHEET_ID ?? '',
     serviceAccountAuth,
   )
 
