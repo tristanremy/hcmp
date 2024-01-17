@@ -8,8 +8,11 @@ import {
 } from '@/components/ui/card'
 import { JWT } from 'google-auth-library'
 import { GoogleSpreadsheet } from 'google-spreadsheet'
+import { cache } from 'react'
 
-export default async function Home() {
+export const revalidate = 30
+
+const getProjects = cache(async () => {
   const serviceAccountAuth = new JWT({
     email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
     key: process.env.GOOGLE_PRIVATE_KEY,
@@ -26,6 +29,12 @@ export default async function Home() {
   const sheet = doc.sheetsByIndex[0]
   const rows = await sheet.getRows()
   const projects = rows.map((r) => r.toObject())
+
+  return projects
+})
+
+export default async function Home() {
+  const projects = await getProjects()
 
   return (
     <main className="flex gap-4 flex-col max-w-6xl mx-auto p-4">
