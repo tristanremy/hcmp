@@ -47,10 +47,10 @@ export default async function Home() {
           ? projects.map((project, i) => {
               const makers = project['Maker Name(s)']
                 .split(',')
-                .map((m) => m.trim())
+                .map((m: string) => m.trim())
               const twitters = project['Maker Twitter']
                 ?.split(',')
-                .map((m) => m.trim())
+                .map((m: string) => m.trim())
               return (
                 <Card
                   key={i}
@@ -71,7 +71,7 @@ export default async function Home() {
                       </p>
                       <p className="flex gap-1">
                         by{' '}
-                        {makers.map((m, i) => (
+                        {makers.map((m: string, i) => (
                           <a
                             key={i}
                             href={twitters?.[i]}
