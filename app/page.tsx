@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/card'
 import { JWT } from 'google-auth-library'
 import { GoogleSpreadsheet } from 'google-spreadsheet'
+import { BadgeDollarSign, Cpu, Rocket, Users } from 'lucide-react'
 import { cache } from 'react'
 
 export const revalidate = 30
@@ -37,31 +38,78 @@ export default async function Home() {
   const projects = await getProjects()
 
   return (
-    <main className="flex gap-4 flex-col max-w-6xl mx-auto p-4">
-      <h1 className="text-2xl font-bold">Hacker Cabin Members Projects</h1>
-      {projects
-        ? projects.map((project, i) => (
-            <Card key={i}>
-              <CardHeader>
-                <CardTitle>{project['Project Name']}</CardTitle>
-                <CardDescription>
-                  <a href={project['Project URL']}>{project['Project URL']}</a>
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>Technology: {project.Technology}</p>
-                <p>Team: {project.Team}</p>
-                <p>Revenue: {project.Revenue}</p>
-              </CardContent>
-              <CardFooter>
-                <p>
-                  By {project['Maker Name(s)']} - Launched on{' '}
-                  {project['Date launched']}
-                </p>
-              </CardFooter>
-            </Card>
-          ))
-        : null}
+    <main className="flex flex-col gap-6 px-4 py-6 max-w-7xl mx-auto">
+      <h1 className="text-3xl my-6 font-bold text-neutral-900">
+        Hacker Cabin Members Projects
+      </h1>
+      <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+        {projects
+          ? projects.map((project, i) => {
+              const makers = project['Maker Name(s)']
+                .split(',')
+                .map((m) => m.trim())
+              const twitters = project['Maker Twitter']
+                ?.split(',')
+                .map((m) => m.trim())
+              return (
+                <Card
+                  key={i}
+                  className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-white border-neutral-200 xl:aspect-h-8 xl:aspect-w-7"
+                >
+                  <CardHeader>
+                    <CardTitle>
+                      <a
+                        href={project['Project URL']}
+                        className="text-emerald-700 hover:text-emerald-500 underline"
+                      >
+                        {project['Project Name']}
+                      </a>
+                    </CardTitle>
+                    <CardDescription>
+                      <p className="px-2 py-1 bg-neutral-100 text-neutral-800 rounded-md text-xs inline">
+                        {project.Description}
+                      </p>
+                      <p className="flex gap-1">
+                        by{' '}
+                        {makers.map((m, i) => (
+                          <a
+                            key={i}
+                            href={twitters?.[i]}
+                            className="text-emerald-700 hover:text-emerald-500 underline"
+                          >
+                            {m}
+                          </a>
+                        ))}
+                      </p>
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ul>
+                      <li className="flex gap-1">
+                        <Cpu />
+                        <p>{project.Technology}</p>
+                      </li>
+                      <li className="flex gap-1 capitalize">
+                        <Users />
+                        <p>{project.Team}</p>
+                      </li>
+                      <li className="flex gap-1 capitalize">
+                        <BadgeDollarSign />
+                        <p>{project.Revenue}</p>
+                      </li>
+                    </ul>
+                  </CardContent>
+                  <CardFooter>
+                    <div className="flex gap-1 text-sm capitalize">
+                      <Rocket />
+                      <p>{project['Date launched']}</p>
+                    </div>
+                  </CardFooter>
+                </Card>
+              )
+            })
+          : null}
+      </div>
     </main>
   )
 }
