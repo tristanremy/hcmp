@@ -44,7 +44,7 @@ export default async function Home() {
       </h1>
       <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
         {projects
-          ? projects.map((project, i) => {
+          ? projects.map((project) => {
               const makers = project['Maker Name(s)']
                 .split(',')
                 .map((m: string) => m.trim())
@@ -53,7 +53,7 @@ export default async function Home() {
                 .map((m: string) => m.trim())
               return (
                 <Card
-                  key={i}
+                  key={project['Project Name']}
                   className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-white border-neutral-200 xl:aspect-h-8 xl:aspect-w-7"
                 >
                   <CardHeader>
@@ -71,9 +71,9 @@ export default async function Home() {
                       </p>
                       <p className="flex gap-1">
                         by{' '}
-                        {makers.map((m: string, i) => (
+                        {makers.map((m: string, i: number) => (
                           <a
-                            key={i}
+                            key={twitters?.[i]}
                             href={twitters?.[i]}
                             className="text-emerald-700 hover:text-emerald-500 underline"
                           >
